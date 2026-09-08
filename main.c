@@ -67,6 +67,42 @@ void push_back_simples(No** cabeca, int valor){
     aux->proximo = novo;
 }
 
+void push_front_duplo(NoDuplo** cabeca, int valor){
+    NoDuplo* novo = criar_noDuplo(valor);
+    if (!novo) return;
+
+    novo->proximo = *cabeca;
+
+    // Se a lista nao estiver vazia, ele liga pra trás tbm
+    if(*cabeca != NULL){
+        (*cabeca)->anterior = novo;
+    }
+
+    // Faz o ponteiro principal da lista apontar pro novo
+    *cabeca = novo;
+}
+
+void push_back_duplo(NoDuplo** cabeca, int valor) {
+    NoDuplo* novo = criar_noDuplo(valor);
+    if (!novo) return;
+
+    // Ve se a lista nao ta vazia
+    if (*cabeca == NULL) {
+        *cabeca = novo;
+        return;
+    }
+
+    // Como no simples, ele procura o ultimo elemento
+    NoDuplo* aux = *cabeca;
+    while (aux->proximo != NULL) {
+        aux = aux->proximo;
+    }
+
+    // Faz o encadeamento duplo do ultimo elemento com o novo
+    aux->proximo = novo;
+    novo->anterior = aux;
+}
+
 int main() {
     No* simples = NULL;
     NoDuplo* duplo = NULL;
