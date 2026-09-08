@@ -28,6 +28,35 @@ No* criar_no(int valor){
     return novo_no;
 }
 
+void inserir_posicao_les(No** cabeca, int valor, int posicao) {
+    if (posicao < 0) return;
+
+    No* novo = criar_no(valor);
+    if (!novo) return;
+
+    // Caso inserção no início (índice 0)
+    if (posicao == 0) {
+        novo->proximo = *cabeca;
+        *cabeca = novo;
+        return;
+    }
+
+    No* atual = *cabeca;
+    // Percorre até achar o nó anterior à posição desejada
+    for (int i = 0; atual != NULL && i < posicao - 1; i++) {
+        atual = atual->proximo;
+    }
+
+    // Posição inválida
+    if (!atual) {
+        free(novo);
+        return;
+    }
+
+    novo->proximo = atual->proximo;
+    atual->proximo = novo;
+}
+
 // Libera toda a memória da lista
 void liberar_les(No** cabeca) {
     No* atual = *cabeca;
@@ -178,6 +207,45 @@ void push_back_duplo(NoDuplo** cabeca, int valor) {
     novo->anterior = aux;
 }
 
+// Insere em uma posição específica na Lista Duplamente Encadeada
+
+void inserir_posicao_lde(NoDuplo** cabeca, int valor, int posicao) {
+    if (posicao < 0) return;
+
+    NoDuplo* novo = criar_noDuplo(valor);
+    if (!novo) return;
+
+    // Caso inserção no início (índice 0)
+    if (posicao == 0) {
+        novo->proximo = *cabeca;
+        if (*cabeca) {
+            (*cabeca)->anterior = novo;
+        }
+        *cabeca = novo
+        return;
+    }
+
+    NoDuplo* atual = *cabeca;
+    // Percorre até achar o nó anterior à posição desejada
+    for (int i = 0; atual != NULL && i < posicao - 1; i++) {
+        atual = atual->proximo;
+    }
+
+    // Posição inválida
+    if (!atual) {
+        free(novo);
+        return;
+    }
+
+    novo->proximo = atual->proximo;
+    novo->anterior = atual;
+
+    if (atual->proximo) {
+        atual->proximo->anterior = novo;
+    }
+    atual->proximo = novo
+}
+
 // Libera a memória da LDE
 void liberar_lde(NoDuplo** cabeca) {
     NoDuplo* atual = *cabeca;
@@ -212,7 +280,7 @@ void remover_lde(NoDuplo** cabeca, int valor) {
     if (temp->proximo) {
         temp->proximo->anterior = temp->anterior;
     }
-    
+
     // Reconecta o próximo com o anterior
     if (temp->anterior) {
         temp->anterior->proximo = temp->proximo;
