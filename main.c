@@ -103,9 +103,133 @@ void push_back_duplo(NoDuplo** cabeca, int valor) {
     novo->anterior = aux;
 }
 
+void menuSimples(No** lista){
+    int opcao = -1, valor, pos;
+
+    while (opcao != -1){
+        printf("\n=== MENU LISTA SIMPLESMENTE ENCADEADA ===\n");
+        printf("1. Inserir em posição específica\n");
+        printf("2. Inserir no final\n");
+        printf("3. Remover de uma posição\n");
+        printf("4. Buscar valor\n");
+        printf("5. Listar\n");
+        printf("0. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                printf("Digite o valor: ");
+                scanf("%d", &valor);
+                printf("Digite a posição (a partir de 1): ");
+                scanf("%d", &pos);
+                inserir_posicao(&lista, valor, pos);
+                break;
+            case 2:
+                printf("Digite o valor: ");
+                scanf("%d", &valor);
+                inserir_final(&lista, valor);
+                printf("Nó inserido no final da lista.\n");
+                break;
+            case 3:
+                printf("Digite a posição a ser removida: ");
+                scanf("%d", &pos);
+                remover_posicao(&lista, pos);
+                break;
+            case 4:
+                printf("Digite o valor para busca: ");
+                scanf("%d", &valor);
+                pos = buscar_valor(lista, valor);
+                if (pos != -1) {
+                    printf("Resultado: Valor %d encontrado na POSIÇÃO %d.\n", valor, pos);
+                } else {
+                    printf("Resultado: Valor %d NÃO encontrado na lista.\n", valor);
+                }
+                break;
+            case 5:
+                listar(lista);
+                break;
+            case 0:
+                liberar_lista(&lista);
+                printf("Memória liberada. Encerrando programa...\n");
+                break;
+            default:
+                printf("Opção inválida! Tente novamente.\n");
+        }
+    }
+    
+
+}
+
+void menuDuplamente(NoDuplo** lista){
+    int opcao = -1, valor, pos;
+
+    while(opcao != 0){
+        printf("\n=== MENU LISTA DUPLAMENTE ENCADEADA ===\n");
+        printf("1. Inserir em posição específica\n");
+        printf("2. Inserir no final\n");
+        printf("3. Remover de uma posição\n");
+        printf("4. Buscar valor\n");
+        printf("5. Listar\n");
+        printf("0. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1:
+                printf("Digite o valor: ");
+                scanf("%d", &valor);
+                printf("Digite a posição (a partir de 1): ");
+                scanf("%d", &pos);
+                inserir_posicao(&lista, valor, pos);
+                break;
+            case 2:
+                printf("Digite o valor: ");
+                scanf("%d", &valor);
+                inserir_final(&lista, valor);
+                printf("Nó inserido no final da lista.\n");
+                break;
+            case 3:
+                printf("Digite a posição a ser removida: ");
+                scanf("%d", &pos);
+                remover_posicao(&lista, pos);
+                break;
+            case 4:
+                printf("Digite o valor para busca: ");
+                scanf("%d", &valor);
+                pos = buscar_valor(lista, valor);
+                if (pos != -1) {
+                    printf("Resultado: Valor %d encontrado na POSIÇÃO %d.\n", valor, pos);
+                } else {
+                    printf("Resultado: Valor %d NÃO encontrado na lista.\n", valor);
+                }
+                break;
+            case 5:
+                listar(lista);
+                break;
+            case 0:
+                liberar_lista(&lista);
+                printf("Memória liberada. Encerrando programa...\n");
+                break;
+            default:
+                printf("Opção inválida! Tente novamente.\n");
+        }
+    }
+}
+
 int main() {
     No* simples = NULL;
     NoDuplo* duplo = NULL;
+
+    int resp;
+    printf("Deseja utilizar a lista simples(1) ou duplamente encadeada(2)?\nResposta: ");
+    scanf("%d", &resp);
+
+    if(resp == 1){
+        menuSimples(simples);
+    } else if(resp == 2){
+       menuDuplamente(duplo);
+    }
 
     return 0;
 }
