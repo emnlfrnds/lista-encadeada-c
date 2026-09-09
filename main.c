@@ -115,29 +115,8 @@ int buscar_valor_les(No **cabeca, int valor) {
   return -1;
 }
 
-// Aloca memória e inicializa um nó duplo
-NoDuplo *criar_noDuplo(int valor) {
-  NoDuplo *novo_no = (NoDuplo *)malloc(sizeof(NoDuplo));
-
-  if (novo_no) {
-    novo_no->valor = valor;
-    novo_no->proximo = NULL;
-    novo_no->anterior = NULL;
-  }
-
-  return novo_no;
-}
-
 void listar_NoSimples(No **inicio) {
   No *atual = *inicio;
-  while (atual != NULL) {
-    printf("%d ", atual->valor);
-    atual = atual->proximo;
-  }
-  printf("\n");
-}
-void listar_NoDuplo(NoDuplo **inicio) {
-  NoDuplo *atual = *inicio;
   while (atual != NULL) {
     printf("%d ", atual->valor);
     atual = atual->proximo;
@@ -151,19 +130,6 @@ void apagar_Primeiro_NoSimples(No **cabeca) {
 
   No *tmp = *cabeca;
   *cabeca = (*cabeca)->proximo;
-  free(tmp);
-}
-
-void apagar_Primeiro_NoDuplo(NoDuplo **cabeca) {
-  if (!*cabeca)
-    return;
-
-  NoDuplo *tmp = *cabeca;
-  *cabeca = (*cabeca)->proximo;
-
-  if (*cabeca)
-    (*cabeca)->anterior = NULL;
-
   free(tmp);
 }
 
@@ -199,6 +165,41 @@ void push_back_simples(No **cabeca, int valor) {
 
   // Adiciona o novo nó no final da lista que foi encontrado
   aux->proximo = novo;
+}
+
+// Aloca memória e inicializa um nó duplo
+NoDuplo *criar_noDuplo(int valor) {
+  NoDuplo *novo_no = (NoDuplo *)malloc(sizeof(NoDuplo));
+
+  if (novo_no) {
+    novo_no->valor = valor;
+    novo_no->proximo = NULL;
+    novo_no->anterior = NULL;
+  }
+
+  return novo_no;
+}
+
+void listar_NoDuplo(NoDuplo **inicio) {
+  NoDuplo *atual = *inicio;
+  while (atual != NULL) {
+    printf("%d ", atual->valor);
+    atual = atual->proximo;
+  }
+  printf("\n");
+}
+
+void apagar_Primeiro_NoDuplo(NoDuplo **cabeca) {
+  if (!*cabeca)
+    return;
+
+  NoDuplo *tmp = *cabeca;
+  *cabeca = (*cabeca)->proximo;
+
+  if (*cabeca)
+    (*cabeca)->anterior = NULL;
+
+  free(tmp);
 }
 
 void push_front_duplo(NoDuplo **cabeca, int valor) {
